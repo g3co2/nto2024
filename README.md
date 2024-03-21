@@ -55,3 +55,23 @@
 WinRAR CVE-2023-38831
 
 Там был безобидный файл, но, когда юзер его открыл, запустился .bat файл с инструкциями на скачивание prikol.exe в файл rjomba.exe.
+
+### task4
+
+1) Скачали prikol.exe с сервера
+
+2) Залили его в песочницу virustotal (анализатор) и получили вот:
+
+- `KernelBase.dll! IsDebuggerPresent #highlighted (#2340)
+Arguments: {“desc”:”Checks if the application is being debugged.”}` -> проверка наличия отладчика
+- `EnumProcesses` -> Вредоносное ПО может использовать его для запроса
+ списка запущенных процессов для обнаружения работы инструментов 
+анализа.
+
+### task5
+
+1) На virustotal в разделе Capabilities - data-manipulation: `encrypt data using AES via x86 extensions`
+
+2) Залили файл в гидру и там нашли, что в пространстве имен есть CBC - метод шифрования
+
+3) На виртуальной машине тоже скачали prikol.exe. Там еще сделалинаш файл `o.txt` с текстом `a` Затем запустили prikol.exe и посмотрели, какая длина у зашифрованного текста - это размер ключа
